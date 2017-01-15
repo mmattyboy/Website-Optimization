@@ -1,6 +1,14 @@
+Describe all steps to run app.
+Summarize optimizations made to index.html and views/js/main.js
 In order to access the not yet live website of the pizzeria and course developer (index.html) by Cameron Pitman, the user must acquire download of any web browser and the access to the internet. 
 
 In the pizzeria website, Cameron offers pizza for order and delivery. The user may choose any toppings they would like to be added to the pizza.
+
+The optimization in index.html include the compression and inlining the styles in css styles, this allows the browser to skip rendering the CSSOM. Furthermore, a compression website was used to compress images into small sizes. The pizza picture was also resized to 100 x 100. Instead of getting pictures from a website, it was downloaded into the img file and compressed in size. 
+
+The optimization for pizza.html involve changes in main.js. The javascript file was what affected the jank when a timeline was loaded in developer tools. Specifically, the function updatePostion (Line 522) was causing a force layout. The reason for this cause was the scrollTop property. This value is changed whenever scrolling occurs. In the case of a for loop, it causes the change in layout everytime. To fix the bottleneck, a variable was declared outside of the for loop and the variable was then assigned to the pizza mover. Throughout the docment, the selectors can be specific by using getElementByID or getElementsByClassName instead of querySelector for improvement. Next, the improvement to scroll fps was on the last eventListener (Line 552). There were much less than 200 pizzas on the screen at each given moment during scrolling. The for loop specifies a value of i < 200 (for 200 pizzas). This caused the slow in fps. For the fix, it was found that the total number of pizzas can be determined by using the screen.height / scrolling row height(s) * col.
+
+In another function in main.js, the changePizzaSizes was also causeing a lower fps due to the unnecessary function, determineDx() and sizeSwitcher. The fix was to change the pizza sizes directly by assigning it to a % value based on which size was selected on the slider.
 
 ## Website Performance Optimization portfolio project
 
