@@ -1,10 +1,13 @@
-Describe all steps to run app.
-Summarize optimizations made to index.html and views/js/main.js
+
 In order to access the not yet live website of the pizzeria and course developer (index.html) by Cameron Pitman, the user must acquire download of any web browser and the access to the internet. 
 
 In the pizzeria website, Cameron offers pizza for order and delivery. The user may choose any toppings they would like to be added to the pizza.
 
+Running index.html for page speed optimization required the creation of a local server and a tunnel that allows the local server to transfer data to the tunnel. To do so, download ngrok. In command prompt change directory to path of the folder that you would like to be the local server, followed by the code: python -m SimpleHTTPServer 8080 <-- this # can be changed. Place the downloaded ngrok.exe into the folder of local server. Run ngrok http 8080. Copy and pasting the public URL given by ngrok will allow public access to index.html. When it is accessible, run the website through pagespeed insights to determine speed score.
+
 The optimization in index.html include the compression and inlining the styles in css styles, this allows the browser to skip rendering the CSSOM. Furthermore, a compression website was used to compress images into small sizes. The pizza picture was also resized to 100 x 100. Instead of getting pictures from a website, it was downloaded into the img file and compressed in size. 
+
+The steps it take to optimize pizza.html is to open up chrome browser. Go into developer tools -> timeline -> hit record -> scroll page -> stop record. The results on the timeline and the console should give hints on the fps and problematic codes that causes slow browsing experience.
 
 The optimization for pizza.html involve changes in main.js. The javascript file was what affected the jank when a timeline was loaded in developer tools. Specifically, the function updatePostion (Line 522) was causing a force layout. The reason for this cause was the scrollTop property. This value is changed whenever scrolling occurs. In the case of a for loop, it causes the change in layout everytime. To fix the bottleneck, a variable was declared outside of the for loop and the variable was then assigned to the pizza mover. Throughout the docment, the selectors can be specific by using getElementByID or getElementsByClassName instead of querySelector for improvement. Next, the improvement to scroll fps was on the last eventListener (Line 552). There were much less than 200 pizzas on the screen at each given moment during scrolling. The for loop specifies a value of i < 200 (for 200 pizzas). This caused the slow in fps. For the fix, it was found that the total number of pizzas can be determined by using the screen.height / scrolling row height(s) * col.
 
